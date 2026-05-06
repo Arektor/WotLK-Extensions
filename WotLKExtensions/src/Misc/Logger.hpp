@@ -1,5 +1,5 @@
 #pragma once
-
+#ifdef INCLUDE_LOGGER
 #include <filesystem>
 #include <fstream>
 #include <string>
@@ -30,3 +30,4 @@ Logger& log(const char* chr, const char* file, size_t line);
 #define LOG_ERROR log("ERROR", __FILE__, __LINE__)
 #define LOG_INFO log("INFO", __FILE__, __LINE__)
 #define LOG_WARN log("WARN", __FILE__, __LINE__)
+#endif //INCLUDE_LOGGER

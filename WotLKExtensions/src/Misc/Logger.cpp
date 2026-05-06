@@ -1,3 +1,4 @@
+#ifdef INCLUDE_LOGGER
 #include <Misc/Logger.hpp>
 
 #include <chrono>
@@ -58,3 +59,4 @@ std::string relProjectPath(std::string const& pathIn)
 {
     return std::filesystem::relative(pathIn, dirname).string();
 }
+#endif //INCLUDE_LOGGER
