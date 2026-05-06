@@ -4,6 +4,8 @@
 // custom DBC manager
 #cmakedefine01 CUSTOM_DBC
 #cmakedefine01 LFGROLES_DBC
+#cmakedefine01 OCCLUSIONVOLUME_DBC
+#cmakedefine01 SPELLATTRIBUTESEXTENDED_DBC
 #cmakedefine01 ZONELIGHT_DBC
 
 // patches
@@ -17,7 +19,9 @@
 #cmakedefine01 SPELLDESCRIPTIONEXT_PATCH
 #cmakedefine01 TOOLTIPID_PATCH
 #cmakedefine01 TOOLTIPDKRUNEEXT_PATCH
+#cmakedefine01 ITEMTOOLTIPMAPLINE_FIX
 
 // Lua functions
 #cmakedefine01 ACTIONBAR_LUA
 #cmakedefine01 DEVHELPER_LUA
+#cmakedefine01 GLUEMGREXTENSION

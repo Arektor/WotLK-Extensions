@@ -1,4 +1,8 @@
 ## Custom Lua functions  
+### GetCombatRatingMultiplier  
+args: combatRatingIndex (1..32), returns combet rating multiplier value (from gtCombatRatings.dbc) for currently logged character  
+### GetCombatRatingScalar  
+args: combatRatingIndex (1..32), returns combet rating scalar value (from gtOCTClassCombatRatingScalar.dbc) for currently logged character  
 ### GetShapeshiftFormId  
 originally added in 4.0.1, no args, returns ID of currently active shapeshift form  
 ### GetSpellDescription  
@@ -33,11 +37,19 @@ no args, nil return; turns on/off wireframe mode
 no args, nil return; turns on/off WMO  
 ### ConvertCoordsToScreenSpace  
 args: x, y, z, returns x, y, (z); converts given world coordinates to current screen position; credits to Tester for original implementation in Duskhaven branch of TSWoW  
+### UnitCustomCastingData  
+args: unitToken; if extended attributes DBC is enabled and given spell has certain attribute flags, returns currentCastID/currentChannelID, shouldHideCastbar, shouldInvertCastbar, otherwise nil; requires UI edits to be effective (CastingBarFrame.lua)  
   
 ## Custom DBCs  
 `.cdbc` file extension is purely cosmetic, just to make it easier to distinguish between stock client dbcs and custom ones. Default files will be provided in `Custom DBCs` directory.  
 ### LFGRoles.cdbc  
 Dehardcodes class roles from Wow.exe, moving the whole table to DBC file. Record contains 2 columns, ClassID and RoleMask.  
+### OcclusionVolume.cdbc and OcclusionVolumePoint.cdbc  
+Dehardcodes occlusion volume data from Wow.exe.
+OcclusionVolume: 4 colums, ID, Name (used only in dbc, so basically just a comment), MapID and Flags.  
+OcclusionVolumePoint: 5 columns, ID, OcclusionVolumeID (from OcclusionVolume.cdbc), PositionX (float), PositionY (float), PositionZ (float). PositionX, PositionY and PositionZ are server coordinates (would require more severe rewrites to use client coords I cba to do currently, maybe someday).  
+### SpellAttributesExtended.cdbc  
+Extends spell attributes to implement more client-side attribute flags, such as `SPELL_ATTR0_CU_DO_NOT_DISPLAY_POWER_COST` which hides spell cost info from tooltip; refer to enums in `SpellAttrCu0`. Record containst 2 columns, SpellID and CustomAttribute0.  
 ### ZoneLight.cdbc and ZoneLightPoint.cdbc  
 Dehardcodes zone light polygons used in Northrend from Wow.exe, also allows usage on any map (originally client allowed usage on maps 530 and above).  
 ZoneLight: 4 columns, ID, Name (used only in dbc, so basically just a comment), MapID and LightID.  

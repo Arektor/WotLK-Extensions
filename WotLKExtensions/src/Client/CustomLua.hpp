@@ -2,19 +2,23 @@
 
 #include <SharedDefines.hpp>
 
-struct lua_State;
-class Main;
-
 class CustomLua
 {
 public:
+    static void Apply();
+
     static int32_t LoadScriptFunctionsCustom();
 
     static int32_t GetAvailableRoles(lua_State* L);
     static int32_t SetLFGRole(lua_State* L);
+
+    static int32_t FlashGameWindow(lua_State* L);
+
 private:
+    CustomLua() = delete;
+    ~CustomLua() = delete;
+
     static void AddToFunctionMap(const char* name, void* ptr);
-    static void Apply();
     static void RegisterFunctions();
 
     static int32_t FindSpellActionBarSlots(lua_State* L);
@@ -31,11 +35,12 @@ private:
     static int32_t ToggleWireframeMode(lua_State* L);
     static int32_t ToggleWMO(lua_State* L);
 
-    static int32_t FlashGameWindow(lua_State* L);
-
     static int32_t GetShapeshiftFormID(lua_State* L);
     static int32_t GetSpellDescription(lua_State* L);
     static int32_t GetSpellNameById(lua_State* L);
+
+    static int32_t GetCombatRatingMultiplier(lua_State* L);
+    static int32_t GetCombatRatingScalar(lua_State* L);
 
     static int32_t GetCustomCombatRating(lua_State* L);
     static int32_t GetCustomCombatRatingBonus(lua_State* L);
@@ -44,5 +49,5 @@ private:
 
     static int32_t PortGraveyard(lua_State* L);
 
-    friend class Main;
+    static int32_t UnitCustomCastingData(lua_State* L);
 };

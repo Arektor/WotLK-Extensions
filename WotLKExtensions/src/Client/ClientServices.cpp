@@ -1,4 +1,12 @@
 #include <Client/ClientServices.hpp>
+#include <Misc/DataContainer.hpp>
+
+uint8_t __fastcall ClientServices::CharacterLogoutEx(void* thisChar, uint32_t unused, char a3, uint8_t a4)
+{
+    sDC.ResetData();
+
+    return reinterpret_cast<uint8_t (__thiscall*)(void*, char, uint8_t)>(0x6B1930)(thisChar, a3, a4);
+}
 
 WoWGUID ClientServices::GetActivePlayer()
 {
@@ -31,6 +39,11 @@ uint32_t ClientServices::GetPowerDivisor(int32_t powerType)
         default:
             return 1;
     }
+}
+
+CGUnit* ClientServices::GetUnitFromName(const char* name)
+{
+    return reinterpret_cast<CGUnit* (__cdecl*)(const char*)>(0x60C1F0)(name);
 }
 
 void ClientServices::InitializePlayer()

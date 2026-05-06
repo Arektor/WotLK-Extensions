@@ -4,20 +4,30 @@
 #include <CDBCMgr/CDBCDefs/ZoneLightPoint.hpp>
 #include <Misc/DataContainer.hpp>
 #include <Misc/Util.hpp>
+#include <WorldData/OcclusionVolumeData.hpp>
 
 #include <PatchConfig.hpp>
 
 void CDBCMgr::Load()
 {
-    DataContainer& dc = DataContainer::GetInstance();
-
 #if LFGROLES_DBC
-    dc.LoadLFGRolesDB();
+    sDC.LoadLFGRolesDB();
+#endif
+
+#if SPELLATTRIBUTESEXTENDED_DBC
+    sDC.LoadSpellAttributesExtendedDB();
+#endif
+
+#if OCCLUSIONVOLUME_DBC
+    sDC.LoadOcclusionVolumeDB();
+    sDC.LoadOcclusionVolumePointDB();
+    OcclusionVolumeData::FillOcclusionVolumeData();
+    OcclusionVolumeData::ApplyOcclusionVolumeExtensions();
 #endif
 
 #if ZONELIGHT_DBC
-    dc.LoadZoneLightDB();
-    dc.LoadZoneLightPointDB();
+    sDC.LoadZoneLightDB();
+    sDC.LoadZoneLightPointDB();
 #endif
 }
 
@@ -35,5 +45,5 @@ static void __declspec(naked) RegisterDBCEx()
 
 void CDBCMgr::PatchAddress()
 {
-    Util::OverwriteUInt32AtAddress(0x634E30, (uint32_t)&RegisterDBCEx - 0x634E34);
+    Util::OverwriteUInt32AtAddress(0x634E30, reinterpret_cast<uint32_t>(&RegisterDBCEx) - 0x634E34);
 }

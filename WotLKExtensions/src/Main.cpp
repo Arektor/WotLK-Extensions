@@ -16,13 +16,14 @@ void Main::OnAttach()
     CGPlayer::ApplyPatches();
     CGTooltip::ApplyPatches();
     Spell::ApplyPatches();
-    
-#if CUSTOM_DBC && ZONELIGHT_DBC
+    CMissile::ApplyPatches();
+
+#if CUSTOM_DBC
+#if ZONELIGHT_DBC
     ZoneLightData::ApplyZoneLightsExtensions();
 #endif
 
     // Custom dbc loader
-#if CUSTOM_DBC
     CDBCMgr::PatchAddress();
 #endif
 }
@@ -38,10 +39,17 @@ void Main::Init()
     CNetClient::Apply();
 #endif
 
-#if OOBLUAFUNCTIONS_PATCH || CUSTOM_DBC || CUSTOMPACKETS_PATCH
+    MacroConditions::Apply();
+
+#if OOBLUAFUNCTIONS_PATCH || CUSTOM_DBC || CUSTOMPACKETS_PATCH || GLUEMGREXTENSION
     // From AwesomeWotLK, invalid function pointer hack
     *reinterpret_cast<uint32_t*>(0xD415B8) = 1;
     *reinterpret_cast<uint32_t*>(0xD415BC) = 0x7FFFFFFF;
+#endif
+
+#if GLUEMGREXTENSION
+    CGlueMgr::Apply();
+    CVar::Apply();
 #endif
 
 #if OOBLUAFUNCTIONS_PATCH || CUSTOMPACKETS_PATCH

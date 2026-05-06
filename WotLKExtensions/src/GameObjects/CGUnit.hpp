@@ -1,5 +1,6 @@
 #pragma once
 
+#include <Data/Structs.hpp>
 #include <GameObjects/CGObject.hpp>
 #include <WorldData/CMovement.hpp>
 
@@ -29,12 +30,22 @@ struct CGUnit : CGObject
     UnitFields* m_unitFields;
     uint32_t m_padding0xD4;
     CMovement* m_movementInfo;
-    uint32_t m_padding0x34[971];
+    uint32_t m_padding0xDC[612];
+    uint32_t m_currentCastId;
+    uint32_t m_padding0x0A70[4];
+    uint32_t m_currentChannelId;
+    uint32_t m_padding0x0A84[353];
 
+    static int32_t EquippedItemMeetsSpellRequirements(CGUnit* thisUnit, SpellRow* spellRow, int32_t requirementFlags);
+    static char* GetFrameScriptText(CGUnit* thisUnit, const char* format, int32_t a3);
     static uint32_t GetShapeshiftFormID(CGUnit* thisUnit);
+    static bool HasAuraMatchingSpellClass(CGUnit* thisUnit, int32_t aura, SpellRow* spell);
+    static bool IsShapeshifted(CGUnit* thisUnit);
 
     uint8_t GetClass() const;
     uint8_t GetGender() const;
     uint8_t GetPowerType() const;
     uint8_t GetRace() const;
+
+    uint32_t GetLevel() const;
 };

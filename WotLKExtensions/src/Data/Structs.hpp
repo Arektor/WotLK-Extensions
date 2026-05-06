@@ -2,11 +2,53 @@
 
 #include <cstdint>
 
+// custom data
+struct CustomCVar
+{
+    const char* m_name;
+    const char* m_description;
+    uint32_t m_size;
+    const char* m_defaultValue;
+    void* m_callback;
+    uint32_t m_flags;
+    int32_t n_a8;
+    bool m_a7;
+    bool m_a9;
+};
+
 // cdbc
 struct LFGRolesRow
 {
     int32_t m_classID = -1;
     int32_t m_roles = - 1;
+};
+
+struct OcclusionVolumeRow
+{
+    int32_t m_ID = -1;
+    char* name = nullptr;
+    int32_t m_mapID = -1;
+    int32_t m_flags = -1;
+};
+
+struct OcclusionVolumePointRow
+{
+    int32_t m_ID = -1;
+    int32_t m_occlusionVolumeID = -1;
+    float m_positionX = 0.f;
+    float m_positionY = 0.f;
+    float m_positionZ = 0.f;
+};
+
+struct SpellAttributesExtendedRow
+{
+    int32_t m_ID = -1;
+    uint32_t m_attributesCu0 = 0;
+
+    inline bool HasCustomAttribute0(uint32_t attribute) const
+    {
+        return !!(m_attributesCu0 & attribute);
+    }
 };
 
 struct ZoneLightRow
@@ -27,10 +69,107 @@ struct ZoneLightPointRow
 };
 
 // dbc
+struct AreaTableRow
+{
+    int32_t m_ID;
+    int32_t m_continentID;
+    int32_t m_parentAreaID;
+    int32_t m_areaBit;
+    int32_t m_flags;
+    int32_t m_soundProviderPref;
+    int32_t m_soundProviderPrefUnderwater;
+    int32_t m_ambienceID;
+    int32_t m_zoneMusic;
+    int32_t m_introSound;
+    int32_t m_explorationLevel;
+    char* m_areaNameLang;
+    int32_t m_factionGroupMask;
+    int32_t m_liquidTypeID[4];
+    float m_minElevation;
+    float m_ambient_multiplier;
+    int32_t m_lightid;
+};
+
 struct ChrClassesRow
 {
     int32_t m_ID;
     int32_t padding0x04[13];
+};
+
+struct FactionRow
+{
+    int32_t m_ID;
+    int32_t m_reputationIndex;
+    int32_t m_reputationRaceMask[4];
+    int32_t m_reputationClassMask[4];
+    int32_t m_reputationBase[4];
+    int32_t m_reputationFlags[4];
+    int32_t m_parentFactionID;
+    float m_parentFactionMod[2];
+    int32_t m_parentFactionCap[2];
+    char* m_name_lang;
+    char* m_description_lang;
+};
+
+struct gtCombatRatingsRow
+{
+    uint32_t m_ID;
+    float m_rating;
+};
+
+struct gtOCTClassCombatRatingScalarRow
+{
+    uint32_t m_ID;
+    float m_scalar;
+};
+
+struct ItemLimitCategoryRow
+{
+    int32_t m_ID;
+    char* m_name_lang;
+    int32_t m_quantity;
+    int32_t m_flags;
+};
+
+struct ItemRandomPropertiesRow
+{
+    int32_t m_ID;
+    char* m_name;
+    int32_t m_enchantment[5];
+    char* m_nameLang;
+};
+
+struct ItemRandomSuffixRow
+{
+    int32_t m_ID;
+    char* m_nameLang;
+    char* m_internalName;
+    int32_t m_enchantment[5];
+    int32_t m_allocationPct[5];
+};
+
+struct ItemSubClassRow
+{
+    int32_t m_classID;
+    int32_t m_subClassID;
+    int32_t m_prerequisiteProficiency;
+    int32_t m_postrequisiteProficiency;
+    int32_t m_flags;
+    int32_t m_displayFlags;
+    int32_t m_weaponParrySeq;
+    int32_t m_weaponReadySeq;
+    int32_t m_weaponAttackSeq;
+    int32_t m_WeaponSwingSize;
+    char* m_displayName_lang;
+    char* m_verboseName_lang;
+};
+
+struct ItemSubClassMaskRow
+{
+    //int32_t m_generatedID;
+    int32_t m_classID;
+    int32_t m_mask;
+    char* m_name_lang;
 };
 
 struct MapRow
@@ -102,14 +241,14 @@ struct SpellRow
     int32_t m_category;
     int32_t m_dispelType;
     int32_t m_mechanic;
-    int32_t m_attributes;
-    int32_t m_attributesEx;
-    int32_t m_attributesExB;
-    int32_t m_attributesExC;
-    int32_t m_attributesExD;
-    int32_t m_attributesExE;
-    int32_t m_attributesExF;
-    int32_t m_attributesExG;
+    uint32_t m_attributes;
+    uint32_t m_attributesEx;
+    uint32_t m_attributesExB;
+    uint32_t m_attributesExC;
+    uint32_t m_attributesExD;
+    uint32_t m_attributesExE;
+    uint32_t m_attributesExF;
+    uint32_t m_attributesExG;
     int32_t m_shapeshiftMask[2];
     int32_t m_shapeshiftExclude[2];
     int32_t m_targets;
@@ -212,4 +351,25 @@ struct SpellRuneCostRow
     int32_t m_unholy;
     int32_t m_frost;
     int32_t m_runicPower;
+};
+
+struct SpellShapeshiftFormRow
+{
+    int32_t m_ID;
+    int32_t m_bonusActionBar;
+    char* m_name_lang;
+    int32_t m_flags;
+    int32_t m_creatureType;
+    int32_t m_attackIconID;
+    int32_t m_combatRoundTime;
+    int32_t m_creatureDisplayID[4];
+    int32_t m_presetSpellID[8];
+};
+
+struct TotemCategoryRow
+{
+    int32_t m_ID;
+    char* m_nameLang;
+    int32_t m_totemCategoryType;
+    int32_t m_totemCategoryMask;
 };
