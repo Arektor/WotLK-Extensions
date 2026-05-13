@@ -682,6 +682,7 @@ void CustomLua::RegisterFunctions()
     AddToFunctionMap("GetSpellDescription", &GetSpellDescription);
     AddToFunctionMap("GetSpellNameById", &GetSpellNameById);
     AddToFunctionMap("ConvertCoordsToScreenSpace", &ConvertCoordsToScreenSpace);
+    AddToFunctionMap("GetCombatRatingMultiplier", &GetCombatRatingMultiplier);
     AddToFunctionMap("GetCombatRatingScalar", &GetCombatRatingScalar);
 #endif
 

@@ -17,12 +17,12 @@ void Misc::ApplyPatches()
 #endif
 
 #if ITEMMODEXT_PATCH
-    // Code needs to be un-commented when you decide to add some custom mods
-    // ofc can replace "ITEM_MOD_TEST" with your own
-    //const char* customItemModStrings[1] =
-    //{
-    //    "ITEM_MOD_TEST"
-    //};
+    const char* customItemModStrings[3] =
+    {
+        "ITEM_MOD_MASTERY_RATING",
+        "ITEM_MOD_FORTUNE_RATING",
+        "ITEM_MOD_VAMPIRISM_RATING"
+    };
 
     memcpy(&itemModTable, (const void*)0xAD6640, 0xC4);
     Util::OverwriteUInt32AtAddress(0x5DC1EB, (uint32_t)&itemModTable);
@@ -41,11 +41,11 @@ void Misc::ApplyPatches()
     Util::SetByteAtAddress((void*)0x62BE55, (uint8_t)(sizeof(itemModTableVal) / 4));
     Util::OverwriteUInt32AtAddress(0x62BE60, (uint32_t)&itemModTableVal);
 
-    //for (uint32_t i = 0; i < sizeof(customItemModStrings) / 4; i++)
-    //    itemModTable[i + 49] = (uint32_t)customItemModStrings[i];
+    for (uint32_t i = 0; i < sizeof(customItemModStrings) / 4; i++)
+        itemModTable[i + 49] = (uint32_t)customItemModStrings[i];
 
-    //for (uint32_t j = 37; j < sizeof(itemModTableVal) / 4; j++)
-    //    itemModTableVal[j] = j + 12;
+    for (uint32_t j = 37; j < sizeof(itemModTableVal) / 4; j++)
+        itemModTableVal[j] = j + 12;
 #endif
 
 #if OCCLUSIONVOLUME_DBC
