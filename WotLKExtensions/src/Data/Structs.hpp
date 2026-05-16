@@ -1,6 +1,9 @@
 #pragma once
 
 #include <cstdint>
+#include <string>
+
+struct DBClient;
 
 // custom data
 struct CustomCVar
@@ -14,6 +17,17 @@ struct CustomCVar
     int32_t n_a8;
     bool m_a7;
     bool m_a9;
+};
+
+struct DBClientEntry
+{
+    const char* m_name;
+    DBClient* m_dbc;
+    int32_t m_exitCode;
+
+    DBClientEntry(const char* name, DBClient* ptr, int32_t exitCode) : m_name(name), m_dbc(ptr), m_exitCode(exitCode)
+    {
+    }
 };
 
 // cdbc
@@ -107,8 +121,16 @@ struct FactionRow
     int32_t m_parentFactionID;
     float m_parentFactionMod[2];
     int32_t m_parentFactionCap[2];
-    char* m_name_lang;
-    char* m_description_lang;
+    char* m_nameLang;
+    char* m_descriptionLang;
+};
+
+struct GlyphPropertiesRow
+{
+    int32_t m_ID;
+    int32_t m_spellID;
+    int32_t m_glyphSlotFlags;
+    int32_t m_spellIconID;
 };
 
 struct gtCombatRatingsRow
@@ -126,7 +148,7 @@ struct gtOCTClassCombatRatingScalarRow
 struct ItemLimitCategoryRow
 {
     int32_t m_ID;
-    char* m_name_lang;
+    char* m_nameLang;
     int32_t m_quantity;
     int32_t m_flags;
 };
@@ -150,6 +172,7 @@ struct ItemRandomSuffixRow
 
 struct ItemSubClassRow
 {
+    //int32_t m_ID;
     int32_t m_classID;
     int32_t m_subClassID;
     int32_t m_prerequisiteProficiency;
@@ -159,9 +182,10 @@ struct ItemSubClassRow
     int32_t m_weaponParrySeq;
     int32_t m_weaponReadySeq;
     int32_t m_weaponAttackSeq;
-    int32_t m_WeaponSwingSize;
-    char* m_displayName_lang;
-    char* m_verboseName_lang;
+    int32_t m_weaponSwingSize;
+    char* m_displayNameLang;
+    char* m_verboseNameLang;
+    int32_t m_padding;
 };
 
 struct ItemSubClassMaskRow
@@ -169,7 +193,25 @@ struct ItemSubClassMaskRow
     //int32_t m_generatedID;
     int32_t m_classID;
     int32_t m_mask;
-    char* m_name_lang;
+    char* m_nameLang;
+};
+
+struct LockRow
+{
+    int32_t m_ID;
+    int32_t m_type[8];
+    int32_t m_index[8];
+    int32_t m_skill[8];
+    int32_t m_action[8];
+};
+
+struct LockTypeRow
+{
+    int32_t m_ID;
+    char* m_nameLang;
+    char* m_resourceNameLang;
+    char* m_verbLang;
+    char* m_cursorName;
 };
 
 struct MapRow
@@ -179,10 +221,10 @@ struct MapRow
     int32_t m_instanceType;
     int32_t m_flags;
     int32_t m_PVP;
-    char* m_mapName_lang;
+    char* m_mapNameLang;
     int32_t m_areaTableID;
-    char* m_mapDescription0_lang;
-    char* m_mapDescription1_lang;
+    char* m_mapDescription0Lang;
+    char* m_mapDescription1Lang;
     int32_t m_loadingScreenID;
     float m_minimapIconScale;
     int32_t m_corpseMapID;
@@ -228,10 +270,10 @@ struct SkillLineRow
     int32_t m_ID;
     int32_t m_categoryID;
     int32_t m_skillCostsID;
-    char* m_displayName_lang;
-    char* m_description_lang;
+    char* m_displayNameLang;
+    char* m_descriptionLang;
     int32_t m_spellIconID;
-    char* m_alternateVerb_lang;
+    char* m_alternateVerbLang;
     int32_t m_canLink;
 };
 
@@ -315,10 +357,10 @@ struct SpellRow
     int32_t m_spellIconID;
     int32_t m_activeIconID;
     int32_t m_spellPriority;
-    char* m_name_lang;
-    char* m_nameSubtext_lang;
-    char* m_description_lang;
-    char* m_auraDescription_lang;
+    char* m_nameLang;
+    char* m_nameSubtextLang;
+    char* m_descriptionLang;
+    char* m_auraDescriptionLang;
     int32_t m_manaCostPct;
     int32_t m_startRecoveryCategory;
     int32_t m_startRecoveryTime;
@@ -357,7 +399,7 @@ struct SpellShapeshiftFormRow
 {
     int32_t m_ID;
     int32_t m_bonusActionBar;
-    char* m_name_lang;
+    char* m_nameLang;
     int32_t m_flags;
     int32_t m_creatureType;
     int32_t m_attackIconID;
