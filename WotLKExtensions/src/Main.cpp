@@ -14,7 +14,7 @@ void Main::OnAttach()
     // Apply patches
     Misc::ApplyPatches();
     CGPlayer::ApplyPatches();
-    CGTooltip::ApplyPatches();
+    //CGTooltip::ApplyPatches();
     Spell::ApplyPatches();
     CMissile::ApplyPatches();
 
